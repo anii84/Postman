@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "a76ad09d-6bb8-48a5-b3d3-e049859b1e98",
+		"name": "GitHub_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25221912"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get_all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"status check\",function(){\r",
+									"    pm.expect(pm.response.status, \"status property\").equals(\"OK\");\r",
+									"})\r",
+									"\r",
+									"pm.test(\"check if the response is an array of issues\", function(){\r",
+									"   const body = pm.response.json();\r",
+									"    pm.expect(Array.isArray(body));\r",
+									"\r",
+									"   for(let item of body){\r",
+									"       pm.expect(typeof(item.title)).equals(\"string\")\r",
+									"       pm.expect(typeof(item.number)).equals(\"number\")\r",
+									"       pm.expect(item.number).is.greaterThan(0)\r",
+									"   }\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response holds an array of issues\", function() { \r",
+									"    pm.expect(pm.response.headers.get('Content-Type')) .equals('application/json; charset=utf-8'); \r",
+									"    const json = pm.response.json()\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response holds an array of issues\", function() {\r",
+									"     pm.expect(pm.response.headers.get('Content-Type')) .equals('application/json; charset=utf-8'); const json = pm.response.json(); pm.expect(Array.isArray(json)).equals(true); \r",
+									"     for (let item of json) { \r",
+									"         pm.expect(typeof(item)).equals(\"object\"); \r",
+									"         pm.expect(Number.isInteger(item.id)).equals(true); \r",
+									"         pm.expect(typeof(item.title)).equals(\"string\"); \r",
+									"         } \r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check issue title\"), function(){\r",
+									"    const body = pm.response.json()\r",
+									"    pm.expect(body.title).to.be.equals(\"\")\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "anii84",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/anii84/Postman/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"anii84",
+								"Postman",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_first",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"check status code\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check issue number\"), function(){\r",
+									"    const body = pm.response.json()\r",
+									"    pm.expect(body.number).to.be.equals(1)\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Check issue title\"), function(){\r",
+									"    const body = pm.response.json()\r",
+									"    pm.expect(body.title).to.be.equals(\"First issue for test purpose\")\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/anii84/Postman/issues/1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"anii84",
+								"Postman",
+								"issues",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://docs.github.com/rest",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://docs.github.com/rest",
+							"protocol": "https",
+							"host": [
+								"docs",
+								"github",
+								"com"
+							],
+							"path": [
+								"rest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Create_issue",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "anii84",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"New issue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/anii84/Postman/issues/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"anii84",
+								"Postman",
+								"issues",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "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",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "anii84",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Repos",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GET_all_repos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/users/anii84/repos",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"users",
+										"anii84",
+										"repos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get_single_repo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"visibility\");\r",
+											"});\r",
+											"pm.test(\"Have issues to be true\", function () {\r",
+											"    pm.response.to.have.has_issues(\"true\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"description\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check repo name\"), function(){\r",
+											"    const body = pm.response.json();\r",
+											"    pm.expect(body.name, \"Name property\").equals(\"Postman\")\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.github.com/repos/anii84/Postman",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"anii84",
+										"Postman"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Get_single_issue_labels Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "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",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "anii84",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Issues with labels\",\r\n    \"labels\": [\"bug\",\"help\"]\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.github.com/users/anii84/repos",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"users",
+										"anii84",
+										"repos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
